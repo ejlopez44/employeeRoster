@@ -13,6 +13,44 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+function promptUser() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "gitUser",
+            message: 'What is your GitHub username?'
+        },
+        {
+            type: "input",
+            name: "email",
+            message: 'What is your email?'
+        },
+        {
+            type: "input",
+            name: "gitURL",
+            message: 'the URL to your project?'
+        },
+        {
+            type: "input",
+            name: "title",
+            message: 'What is your project\'s name?'
+        },
+        {
+            type: "input",
+            name: "desc",
+            message: 'Please write a short description of your project'
+        },
+        {
+            type: "list",
+            name: "role",
+            message: 'Which type of team member would you like to add?',
+            choices: ["Engineer", 'Intern', 'I do not want to add a team member']
+        },
+    ]);
+}
+
+
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
