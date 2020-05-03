@@ -10,45 +10,124 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-function promptUser() {
+
+const getManager = () => {
     return inquirer.prompt([
         {
             type: "input",
-            name: "gitUser",
-            message: 'What is your GitHub username?'
+            name: "name",
+            message: 'What is your manager\'s name?'
+        },
+        {
+            type: "input",
+            name: "id",
+            message: 'What is your manager\'s id?'
         },
         {
             type: "input",
             name: "email",
-            message: 'What is your email?'
+            message: 'What is your manager\'s email?'
         },
         {
             type: "input",
-            name: "gitURL",
-            message: 'the URL to your project?'
+            name: "officeNumber",
+            message: 'What is your manager\'s office number?'
         },
-        {
-            type: "input",
-            name: "title",
-            message: 'What is your project\'s name?'
-        },
-        {
-            type: "input",
-            name: "desc",
-            message: 'Please write a short description of your project'
-        },
-        {
-            type: "list",
-            name: "role",
-            message: 'Which type of team member would you like to add?',
-            choices: ["Engineer", 'Intern', 'I do not want to add a team member']
-        },
-    ]);
+    ]).then(function (answer) {
+        const manager = new Manager(answer.name, answer.id, answer.email, answer.officeNumber)
+        employeeArr.push(manager)
+        addTeamMember()
+    })
 }
 
+const addTeamMember = () => {
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "nextTeamMember",
+            message: 'Which type of team member would you like to add?',
+            choices: ["Engineer", 'Intern', 'I do not want to add a team member']
+        }
+    ]).then(function (res) {
+
+        if (res.nextTeamMember === 'Engineer') {
+            getEngineer()
+        }
+        else if (res.nextTeamMember === 'Intern') {
+            getIntern()
+        } else {
+            // console.log(employeeArr)
+            const html = render(employeeArr)
+            // fs.mkdirSync()
+            // fs.writeFileSync('team.html', html)
+            fs.mkdirSync('output')
+            fs.writeFileSync(outputPath, html)
+        }
+    });
+}
+
+const getEngineer = () => {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: 'What is your engineer\'s name?'
+        },
+        {
+            type: "input",
+            name: "id",
+            message: 'What is your engineer\'s id?'
+        },
+        {
+            type: "input",
+            name: "email",
+            message: 'What is your engineer\'s email?'
+        },
+        {
+            type: "input",
+            name: "officeNumber",
+            message: 'What is your engineer\'s Github username?'
+        },
+    ]).then(function (answer) {
+        const engineer = new Engineer(answer.name, answer.id, answer.email, answer.github)
+        employeeArr.push(engineer)
+        addTeamMember()
+    })
+}
+
+const getIntern = () => {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: 'What is your intern\'s name?'
+        },
+        {
+            type: "input",
+            name: "id",
+            message: 'What is your intern\'s id?'
+        },
+        {
+            type: "input",
+            name: "email",
+            message: 'What is your intern\'s email?'
+        },
+        {
+            type: "input",
+            name: "school",
+            message: 'What is your intern\'s school?'
+        },
+    ]).then(function (answer) {
+        const intern = new Intern(answer.name, answer.id, answer.email, answer.school)
+        employeeArr.push(intern)
+        addTeamMember()
+    })
+}
+const employeeArr = []
+
+getManager()
 
 
 
@@ -59,12 +138,10 @@ function promptUser() {
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
+
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
 
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
