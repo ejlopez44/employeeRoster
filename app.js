@@ -5,8 +5,8 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+const OUTPUT_DIR = path.resolve(__dirname, "output"); // '/'+'output'
+const outputPath = path.join(OUTPUT_DIR, "team.html"); // '/output'+'team.html'
 
 const render = require("./lib/htmlRenderer");
 
@@ -28,7 +28,16 @@ const getManager = () => {
         {
             type: "input",
             name: "email",
-            message: 'What is your manager\'s email?'
+            message: 'What is your manager\'s email?',
+            // validate: answer => {
+            //     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/
+            //     const pass = answer.match(regex)
+            //     if (pass) {
+            //         return true
+            //     } else {
+            //         return "Enter a valid email"
+            //     }
+            // }
         },
         {
             type: "input",
@@ -60,8 +69,6 @@ const addTeamMember = () => {
         } else {
             // console.log(employeeArr)
             const html = render(employeeArr)
-            // fs.mkdirSync()
-            // fs.writeFileSync('team.html', html)
             fs.mkdirSync('output')
             fs.writeFileSync(outputPath, html)
         }
@@ -87,7 +94,7 @@ const getEngineer = () => {
         },
         {
             type: "input",
-            name: "officeNumber",
+            name: "github",
             message: 'What is your engineer\'s Github username?'
         },
     ]).then(function (answer) {
