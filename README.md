@@ -1,6 +1,8 @@
 
 # Employee Roster Builder
 
+![App Output Screenshot](https://github.com/ejlopez44/employeeRoster/blob/master/assets/example.png?raw=true)
+
 ## Description
 
 This application is designed to allow a manager of a team build a webpage that displays each of their employee's information. It prompts the manager to add as many new engineers or interns as needed and dynamically builds a webpage based on the input.
@@ -32,7 +34,7 @@ Be sure to install npm packages first. It is possible to change variables in the
 
 ## License
 
-This project is protected under the ![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)
+![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Contributing
 
